@@ -120,6 +120,7 @@ export class OAuth2Strategy<
   protected useBasicAuthenticationHeader: boolean;
   protected usePKCEFlow: boolean;
   protected scope?: string;
+  protected usePKCEFlow: boolean;
 
   private sessionStateKey = "oauth2:state";
   private codeVerifierStateKey = "oauth2:code_verifier";
@@ -166,6 +167,9 @@ export class OAuth2Strategy<
     let callbackURL = this.getCallbackURL(request);
 
     debug("Callback URL", callbackURL);
+
+    // PKCE
+    const { codeVerifier, codeChallenge } = this.generatePKCE();
 
     // Redirect the user to the callback URL
     if (url.pathname !== callbackURL.pathname) {
@@ -407,6 +411,10 @@ export class OAuth2Strategy<
     // We need to check if `authorizationParams` has not set scopes to avoid regressions on dependent libraries
     if (!params.has("scope") && this.scope) {
       params.set("scope", this.scope);
+    }
+    if (challenge) {
+      params.set("code_challenge_method", "S256");
+      params.set("code_challenge", challenge);
     }
 
     let url = new URL(this.authorizationURL);

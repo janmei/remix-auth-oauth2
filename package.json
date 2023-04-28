@@ -30,10 +30,6 @@
     "package.json",
     "README.md"
   ],
-  "dependencies": {
-    "debug": "^4.3.4",
-    "uuid": "^9.0.1"
-  },
   "peerDependencies": {
     "@remix-run/server-runtime": "^1.0.0 || ^2.0.0",
     "remix-auth": "^3.6.0"
@@ -48,6 +44,7 @@
     "@remix-run/server-runtime": "^2.8.1",
     "@types/debug": "^4.1.12",
     "@types/jest": "^29.5.12",
+    "@types/randomstring": "^1.1.8",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
@@ -75,5 +72,12 @@
     "uuid": "^8.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "base64url": "^3.0.1",
+    "debug": "^4.3.4",
+    "randomstring": "^1.2.3",
+    "remix-auth": "^3.2.2",
+    "uuid": "^9.0.1"
   }
 }
