@@ -34,7 +34,8 @@ authenticator.use(
       callbackURL: "https://example.app/auth/callback",
       usePKCEFlow: false // defaults to false
       scope: "openid email profile", // optional
-      useBasicAuthenticationHeader: false // defaults to false
+      useBasicAuthenticationHeader: false, // defaults to false
+      usePKCEFlow: false, // defaults to false
     },
     async ({
       accessToken,

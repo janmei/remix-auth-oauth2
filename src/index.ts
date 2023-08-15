@@ -168,9 +168,6 @@ export class OAuth2Strategy<
 
     debug("Callback URL", callbackURL);
 
-    // PKCE
-    const { codeVerifier, codeChallenge } = this.generatePKCE();
-
     // Redirect the user to the callback URL
     if (url.pathname !== callbackURL.pathname) {
       // PKCE
