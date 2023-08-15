@@ -75,11 +75,9 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
-    "base64url": "^3.0.1",
     "crypto-js": "^4.1.1",
     "debug": "^4.3.4",
-    "randomstring": "^1.2.3",
-    "remix-auth": "^3.2.2",
+    "remix-auth": "^3.4.0",
     "uuid": "^9.0.1"
   }
 }
