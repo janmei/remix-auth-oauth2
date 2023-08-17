@@ -160,7 +160,7 @@ export class OAuth2Strategy<
       return this.success(user, request, sessionStorage, options);
     }
 
-    let callbackURL = this.getCallbackURL(url);
+    let callbackURL = this.getCallbackURL(request);
 
     debug("Callback URL", callbackURL);
 
@@ -367,17 +367,22 @@ export class OAuth2Strategy<
     } as const;
   }
 
-  private getCallbackURL(url: URL) {
+  private getCallbackURL(request: Request) {
     if (
       this.callbackURL.startsWith("http:") ||
       this.callbackURL.startsWith("https:")
     ) {
       return new URL(this.callbackURL);
     }
+    let host =
+      request.headers.get('X-Forwarded-Host') ??
+      request.headers.get('host') ??
+      new URL(request.url).host
+    let protocol = host.includes('localhost') ? 'http' : 'https'
     if (this.callbackURL.startsWith("/")) {
-      return new URL(this.callbackURL, url);
+      return new URL(this.callbackURL, `${protocol}://${host}`);
     }
-    return new URL(`${url.protocol}//${this.callbackURL}`);
+    return new URL(`${protocol}//${this.callbackURL}`);
   }
 
   private getAuthorizationURL(
@@ -390,10 +395,7 @@ export class OAuth2Strategy<
     );
     params.set("response_type", this.responseType);
     params.set("client_id", this.clientID);
-    params.set(
-      "redirect_uri",
-      this.getCallbackURL(new URL(request.url)).toString()
-    );
+    params.set( "redirect_uri", this.getCallbackURL(request).toString());
     params.set("state", state);
     if (challenge) {
       params.set("code_challenge_method", "S256");
