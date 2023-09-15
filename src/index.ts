@@ -54,7 +54,7 @@ export interface OAuth2StrategyVerifyParams<
   ExtraParams extends Record<string, unknown> = Record<string, never>
 > {
   accessToken: string;
-  refreshToken: string;
+  refreshToken?: string;
   extraParams: ExtraParams;
   profile: Profile;
   context?: AppLoadContext;
@@ -356,13 +356,13 @@ export class OAuth2Strategy<
 
   protected async getAccessToken(response: Response): Promise<{
     accessToken: string;
-    refreshToken: string;
+    refreshToken?: string;
     extraParams: ExtraParams;
   }> {
     let { access_token, refresh_token, ...extraParams } = await response.json();
     return {
       accessToken: access_token as string,
-      refreshToken: refresh_token as string,
+      refreshToken: refresh_token as string | undefined,
       extraParams,
     } as const;
   }
@@ -441,7 +441,7 @@ export class OAuth2Strategy<
     params: URLSearchParams
   ): Promise<{
     accessToken: string;
-    refreshToken: string;
+    refreshToken?: string;
     extraParams: ExtraParams;
   }> {
     let headers: HeadersInit = {
