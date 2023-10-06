@@ -44,6 +44,7 @@ export interface OAuth2StrategyOptions {
   clientID: string;
   clientSecret: string;
   callbackURL: string;
+  scope?: string;
   responseType?: ResponseType;
   useBasicAuthenticationHeader?: boolean;
   usePKCEFlow?: boolean;
@@ -118,6 +119,7 @@ export class OAuth2Strategy<
   protected responseType: ResponseType;
   protected useBasicAuthenticationHeader: boolean;
   protected usePKCEFlow: boolean;
+  protected scope?: string;
 
   private sessionStateKey = "oauth2:state";
   private codeVerifierStateKey = "oauth2:code_verifier";
@@ -135,6 +137,7 @@ export class OAuth2Strategy<
     this.clientID = options.clientID;
     this.clientSecret = options.clientSecret;
     this.callbackURL = options.callbackURL;
+    this.scope = options.scope;
     this.responseType = options.responseType ?? "code";
     this.useBasicAuthenticationHeader =
       options.useBasicAuthenticationHeader ?? false;
@@ -400,6 +403,9 @@ export class OAuth2Strategy<
     if (challenge) {
       params.set("code_challenge_method", "S256");
       params.set("code_challenge", challenge);
+    }
+    if (this.scope) {
+      params.set("scope", this.scope);
     }
 
     let url = new URL(this.authorizationURL);

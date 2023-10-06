@@ -32,8 +32,9 @@ authenticator.use(
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: "https://example.app/auth/callback",
-      useBasicAuthenticationHeader: false, // defaults to false
       usePKCEFlow: false // defaults to false
+      scope: "openid email profile", // optional
+      useBasicAuthenticationHeader: false // defaults to false
     },
     async ({
       accessToken,
