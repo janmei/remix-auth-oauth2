@@ -404,7 +404,8 @@ export class OAuth2Strategy<
       params.set("code_challenge_method", "S256");
       params.set("code_challenge", challenge);
     }
-    if (this.scope) {
+    // We need to check if `authorizationParams` has not set scopes to avoid regressions on dependent libraries
+    if (!params.has("scope") && this.scope) {
       params.set("scope", this.scope);
     }
 
