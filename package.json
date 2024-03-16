@@ -30,6 +30,10 @@
     "package.json",
     "README.md"
   ],
+  "dependencies": {
+    "debug": "^4.3.4",
+    "uuid": "^9.0.1"
+  },
   "peerDependencies": {
     "@remix-run/server-runtime": "^1.0.0 || ^2.0.0",
     "remix-auth": "^3.6.0"
